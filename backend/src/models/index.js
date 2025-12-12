@@ -301,6 +301,20 @@ const sectionScoreModel = require("./SectionScore");
 const studentTestResultModel = require("./StudentTestResult");
 const studentsResultsModel = require("./StudentsResults");
 const studentViolationModel = require("./StudentViolation");
+const Course = require('./Slot/Course');
+const Module = require('./Slot/Module');
+const slotTestModel = require('./Slot/Test');
+const SlotTestSession = require('./Slot/TestSection');
+const SlotQuestionModel = require('./Slot/Question');
+const SlotVenue = require('./Slot/Venue');
+const Slot = require('./Slot/Slot');
+// const SlotTopic = require('./Slot/Topic');
+const slotTopicModel = require('./Slot/Topic');
+const ModuleTest = require('./Slot/ModuleTest');
+const MCQQuestion = require('./Slot/MCQQuestion');
+const CodingProblem = require('./Slot/CodingProblem');
+const SlotBooking = require("./Slot/SlotBooking");
+
 
 // Initialize Sequelize models
 const db = {
@@ -331,8 +345,63 @@ const db = {
   SectionScore: sectionScoreModel(sequelize, DataTypes),
   StudentTestResult: studentTestResultModel(sequelize, DataTypes),
   StudentsResults: studentsResultsModel(sequelize, DataTypes),
-  StudentViolation: studentViolationModel(sequelize, DataTypes)
+  StudentViolation: studentViolationModel(sequelize, DataTypes),
+  Course: Course,
+  Module: Module,
+  // SlotTest,
+  SlotTest: slotTestModel,
+  SlotTestSession,
+  SlotQuestion: SlotQuestionModel(sequelize, DataTypes),
+  SlotVenue,
+  Slot: Slot,
+  // SlotTopic: SlotTopic(sequelize, DataTypes),
+  SlotTopic: slotTopicModel,
+  ModuleTest: ModuleTest,
+  MCQQuestion: MCQQuestion,
+  CodingProblem: CodingProblem,
+  SlotBooking: SlotBooking
 };
+
+const { SlotTopic, SlotQuestion, SlotTest} = db;
+
+Slot.hasMany(SlotBooking, { foreignKey: "slotId" });
+SlotBooking.belongsTo(Slot, { foreignKey: "slotId" });
+
+
+Course.hasMany(Module, { foreignKey: 'courseId', as: 'modules' });
+Module.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
+
+Module.hasOne(SlotTest, { foreignKey: 'moduleId', as: 'slotTest' });
+SlotTest.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
+
+// Module -> Topic associations
+Module.hasMany(SlotTopic, { foreignKey: 'moduleId', as: 'topics' });
+SlotTopic.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
+
+// Module -> Test associations
+Module.hasMany(ModuleTest, { foreignKey: 'moduleId', as: 'tests' });
+ModuleTest.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
+
+// Test -> Questions/Problems associations
+ModuleTest.hasMany(MCQQuestion, { foreignKey: 'testId', as: 'mcqQuestions' });
+MCQQuestion.belongsTo(ModuleTest, { foreignKey: 'testId', as: 'test' });
+
+ModuleTest.hasMany(CodingProblem, { foreignKey: 'testId', as: 'codingProblems' });
+CodingProblem.belongsTo(ModuleTest, { foreignKey: 'testId', as: 'test' });
+
+SlotTest.hasMany(SlotTestSession, { foreignKey: 'testId', as: 'sessions' });
+SlotTestSession.belongsTo(SlotTest, { foreignKey: 'testId', as: 'slotTest' });
+
+Module.hasMany(SlotQuestion, { foreignKey: 'moduleId', as: 'questions' });
+SlotQuestion.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
+
+SlotTestSession.hasMany(SlotQuestion, { foreignKey: 'sectionId', as: 'questions' });
+SlotQuestion.belongsTo(SlotTestSession, { foreignKey: 'sectionId', as: 'session' });
+
+SlotVenue.hasMany(Slot, { foreignKey: 'venueId', as: 'slots' });
+Slot.belongsTo(SlotVenue, { foreignKey: 'venueId', as: 'venue' });
+
+
 
 // Test -> Section -> MCQ
 db.Test.hasMany(db.Section, { foreignKey: "testId" });

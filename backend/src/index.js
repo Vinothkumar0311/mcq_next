@@ -112,6 +112,25 @@ app.use('/api/excel-report', require('./routes/excelReportRoutes'));
 app.use('/api/load-test', require('./routes/loadTestRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Slot
+const courseRoutes = require('./routes/Slot/courseRoutes');
+const moduleRoutes = require('./routes/Slot/moduleRoutes');
+const testRoutesSlot = require('./routes/Slot/testRoutes');
+const moduleTestRoutes = require('./routes/Slot/testRoutes');
+const questionRoutesSlot = require('./routes/Slot/questionRoutes');
+const venueRoutes = require('./routes/Slot/venueRoutes');
+const slotRoutes = require('./routes/Slot/slotRoutes');
+const SlotBookingRoutes = require('./routes/Slot/slotBookingRoutes');
+
+app.use('/api/courses', courseRoutes);
+app.use('/modules', moduleRoutes);
+app.use('/api/tests', testRoutesSlot);
+app.use('/api', moduleTestRoutes);
+app.use('/questions', questionRoutesSlot);
+app.use('/api/venues', venueRoutes);
+app.use('/api/slots', slotRoutes);
+app.use("/api/slot-booking", SlotBookingRoutes);
+
 // Load test routes
 app.use('/api/test-results', require('./routes/loadTestRoutes'));
 

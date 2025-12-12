@@ -49,7 +49,7 @@
 //               />
 //             </div>
 //             <h1 className="text-xl font-bold text-gray-900">
-//               Aakam Assessment Admin
+//               LMS
 //             </h1>
 //           </div>
 //           <div className="flex items-center space-x-4">
@@ -100,6 +100,7 @@ import {
   Users,
   LogOut,
   TestTube,
+  ChartLine,
   Shield,
   CreditCard,
   FileText,
@@ -120,7 +121,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
 
   const menuItems = [
-    { icon: TestTube, label: "Dashboard", path: "/admin/dashboard" },
+    { icon: ChartLine, label: "Dashboard", path: "/admin/dashboard" },
+    { icon: TestTube, label: "Create Test", path: "/admin/create-test" },
     { icon: BookOpen, label: "Courses", path: "/admin/courses" },
     { icon: Calendar, label: "Slot Booking", path: "/admin/slot-booking" },
     { icon: FileText, label: "Assessment Center", path: "/admin/assessment-center" },
@@ -149,7 +151,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               />
             </div>
             <h1 className="text-xl font-bold text-gray-900">
-              Aakam Assessment Admin
+              LMS
             </h1>
           </div>
           <div className="flex items-center space-x-4">

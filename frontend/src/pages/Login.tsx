@@ -1,4 +1,3 @@
-
 // // import { useState } from "react";
 // // import { Button } from "@/components/ui/button";
 // // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,7 +40,7 @@
 // //           <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
 // //             <Code className="w-8 h-8 text-white" />
 // //           </div>
-// //           <h1 className="text-3xl font-bold text-gray-900">Aakam Assessment Platform</h1>
+// //           <h1 className="text-3xl font-bold text-gray-900">LMS</h1>
 // //           <p className="text-gray-600 mt-2">Sign in to your account</p>
 // //         </div>
 
@@ -61,7 +60,7 @@
 // //                   Admin
 // //                 </TabsTrigger>
 // //               </TabsList>
-              
+
 // //               <TabsContent value="student">
 // //                 <form onSubmit={handleStudentLogin} className="space-y-4">
 // //                   <div>
@@ -91,7 +90,7 @@
 // //                   </Button>
 // //                 </form>
 // //               </TabsContent>
-              
+
 // //               <TabsContent value="admin">
 // //                 <form onSubmit={handleAdminLogin} className="space-y-4">
 // //                   <div>
@@ -122,7 +121,7 @@
 // //                 </form>
 // //               </TabsContent>
 // //             </Tabs>
-            
+
 // //             <div className="text-center mt-6">
 // //               <a href="#" className="text-sm text-blue-600 hover:underline">
 // //                 Forgot your password?
@@ -136,8 +135,6 @@
 // // };
 
 // // export default Login;
-
-
 
 // import { useState } from "react";
 // import { Button } from "@/components/ui/button";
@@ -184,7 +181,7 @@
 //         },
 //         body: JSON.stringify({ token: credentialResponse.credential }),
 //       });
-      
+
 //       const data = await response.json();
 //       if (data.success) {
 //         localStorage.setItem('token', data.token);
@@ -207,7 +204,7 @@
 //           <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
 //             <Code className="w-8 h-8 text-white" />
 //           </div>
-//           <h1 className="text-3xl font-bold text-gray-900">Aakam Assessment Platform</h1>
+//           <h1 className="text-3xl font-bold text-gray-900">LMS</h1>
 //           <p className="text-gray-600 mt-2">Sign in to your account</p>
 //         </div>
 
@@ -227,7 +224,7 @@
 //                   Admin
 //                 </TabsTrigger>
 //               </TabsList>
-              
+
 //               <TabsContent value="student">
 //                 <form onSubmit={handleStudentLogin} className="space-y-4">
 //                   <div>
@@ -257,7 +254,7 @@
 //                   </Button>
 //                 </form>
 //               </TabsContent>
-              
+
 //               <TabsContent value="admin">
 //                 <form onSubmit={handleAdminLogin} className="space-y-4">
 //                   <div>
@@ -309,7 +306,7 @@
 //                 width="300"
 //               />
 //             </div>
-            
+
 //             <div className="text-center mt-6">
 //               <a href="#" className="text-sm text-blue-600 hover:underline">
 //                 Forgot your password?
@@ -333,7 +330,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code, User, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -344,28 +341,28 @@ const Login = () => {
     e.preventDefault();
     if (studentForm.id && studentForm.password) {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ 
-            email: studentForm.id, 
-            password: studentForm.password 
+          body: JSON.stringify({
+            email: studentForm.id,
+            password: studentForm.password,
           }),
         });
-        
+
         const data = await response.json();
         if (data.success) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("Student login successful!");
           navigate("/student/dashboard");
         } else {
           toast.error(data.error || "Login failed");
         }
       } catch (error) {
-        console.error('Login error:', error);
+        console.error("Login error:", error);
         toast.error("An error occurred during login");
       }
     } else {
@@ -377,28 +374,31 @@ const Login = () => {
     e.preventDefault();
     if (adminForm.email && adminForm.password) {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/admin-login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ 
-            email: adminForm.email, 
-            password: adminForm.password 
-          }),
-        });
-        
+        const response = await fetch(
+          "http://localhost:5000/api/auth/admin-login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: adminForm.email,
+              password: adminForm.password,
+            }),
+          }
+        );
+
         const data = await response.json();
         if (data.success) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("Admin login successful!");
           navigate("/admin/create-test");
         } else {
           toast.error(data.error || "Invalid credentials");
         }
       } catch (error) {
-        console.error('Admin login error:', error);
+        console.error("Admin login error:", error);
         toast.error("An error occurred during login");
       }
     } else {
@@ -408,25 +408,25 @@ const Login = () => {
 
   const handleGoogleLogin = async (credentialResponse: any) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/google', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/auth/google", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ token: credentialResponse.credential }),
       });
-      
+
       const data = await response.json();
       if (data.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         toast.success("Google login successful!");
         navigate("/student/assessment");
       } else {
         toast.error(data.error || "Google login failed");
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       toast.error("An error occurred during login");
     }
   };
@@ -435,15 +435,19 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-25 h-25  rounded-xl flex items-center justify-center mx-auto mb-4">
-            {/* <Code className="w-8 h-8 text-white" /> */}
-            <img
+          {/* <div className="w-25 h-25  rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Code className="w-8 h-8 text-white bg-blue" />
+            {/* <img
                 src="/favicon.svg"
                 alt="icon"
                 className="w-20 h-20 object-contain"
-              />
+              /> 
+          </div> */}
+          <div className="w-24 h-24 rounded-xl flex items-center justify-center mx-auto mb-4 bg-blue-500">
+            <Code className="w-8 h-8 text-white" />
+            {/* <img src="/favicon.svg" alt="icon" className="w-20 h-20 object-contain" /> */}
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Aakam Assessment Platform</h1>
+          <h1 className="text-3xl font-bold text-gray-900">LMS</h1>
           <p className="text-gray-600 mt-2">Sign in to your account</p>
         </div>
 
@@ -454,7 +458,10 @@ const Login = () => {
           <CardContent>
             <Tabs defaultValue="student" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="student" className="flex items-center gap-2">
+                <TabsTrigger
+                  value="student"
+                  className="flex items-center gap-2"
+                >
                   <User className="w-4 h-4" />
                   Student
                 </TabsTrigger>
@@ -463,7 +470,7 @@ const Login = () => {
                   Admin
                 </TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="student">
                 <form onSubmit={handleStudentLogin} className="space-y-4">
                   <div>
@@ -473,7 +480,9 @@ const Login = () => {
                       type="email"
                       placeholder="Enter your email"
                       value={studentForm.id}
-                      onChange={(e) => setStudentForm({...studentForm, id: e.target.value})}
+                      onChange={(e) =>
+                        setStudentForm({ ...studentForm, id: e.target.value })
+                      }
                       className="mt-1"
                     />
                   </div>
@@ -484,16 +493,24 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your SIM number"
                       value={studentForm.password}
-                      onChange={(e) => setStudentForm({...studentForm, password: e.target.value})}
+                      onChange={(e) =>
+                        setStudentForm({
+                          ...studentForm,
+                          password: e.target.value,
+                        })
+                      }
                       className="mt-1"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700"
+                  >
                     Sign In as Student
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="admin">
                 <form onSubmit={handleAdminLogin} className="space-y-4">
                   <div>
@@ -503,7 +520,9 @@ const Login = () => {
                       type="email"
                       placeholder="Enter your email"
                       value={adminForm.email}
-                      onChange={(e) => setAdminForm({...adminForm, email: e.target.value})}
+                      onChange={(e) =>
+                        setAdminForm({ ...adminForm, email: e.target.value })
+                      }
                       className="mt-1"
                     />
                   </div>
@@ -514,11 +533,16 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your password"
                       value={adminForm.password}
-                      onChange={(e) => setAdminForm({...adminForm, password: e.target.value})}
+                      onChange={(e) =>
+                        setAdminForm({ ...adminForm, password: e.target.value })
+                      }
                       className="mt-1"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
                     Sign In as Admin
                   </Button>
                 </form>
@@ -530,7 +554,9 @@ const Login = () => {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">
+                  Or continue with
+                </span>
               </div>
             </div>
 
@@ -545,7 +571,7 @@ const Login = () => {
                 width="300"
               />
             </div>
-            
+
             <div className="text-center mt-6">
               <a href="#" className="text-sm text-blue-600 hover:underline">
                 Forgot your password?

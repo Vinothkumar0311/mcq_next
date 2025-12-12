@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Code, Users, Award } from "lucide-react";
@@ -11,23 +10,23 @@ const Index = () => {
     {
       icon: BookOpen,
       title: "MCQ Assessments",
-      description: "Comprehensive testing with detailed analytics"
+      description: "Comprehensive testing with detailed analytics",
     },
     {
       icon: Code,
       title: "Code Challenges",
-      description: "Real-time coding environment with instant feedback"
+      description: "Real-time coding environment with instant feedback",
     },
     {
       icon: Users,
       title: "Student Management",
-      description: "Track progress and manage student accounts"
+      description: "Track progress and manage student accounts",
     },
     {
       icon: Award,
       title: "Performance Analytics",
-      description: "Detailed reports and progress tracking"
-    }
+      description: "Detailed reports and progress tracking",
+    },
   ];
 
   return (
@@ -37,17 +36,24 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                {/* <Code className="w-5 h-5 text-white" /> */}
-                <img
+              {/* <div className="w-25 h-25  rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Code className="w-8 h-8 text-white bg-blue" />
+            {/* <img
                 src="/favicon.svg"
                 alt="icon"
-                className="w-18 h-18 object-contain"
-              />
+                className="w-20 h-20 object-contain"
+              /> 
+          </div> */}
+              <div className="w-24 h-24 rounded-2xl bg-blue-600 flex items-center justify-center">
+                <Code className="w-12 h-12 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">Aakam Assessment Platform</h1>
+
+              <h1 className="text-2xl font-bold text-gray-900">LMS</h1>
             </div>
-            <Button onClick={() => navigate("/login")} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={() => navigate("/login")}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               Get Started
             </Button>
           </div>
@@ -61,19 +67,19 @@ const Index = () => {
             Smart Learning & Evaluation Platform
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Comprehensive platform combining MCQ assessments and live coding challenges 
-            with advanced analytics and performance tracking.
+            Comprehensive platform combining MCQ assessments and live coding
+            challenges with advanced analytics and performance tracking.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => navigate("/login")}
               className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3"
             >
               Start Learning
             </Button>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="outline"
               onClick={() => navigate("/login")}
               className="text-lg px-8 py-3"
@@ -86,12 +92,17 @@ const Index = () => {
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
+            <Card
+              key={index}
+              className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md"
+            >
               <CardContent className="p-6 text-center">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <feature.icon className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {feature.title}
+                </h3>
                 <p className="text-gray-600 text-sm">{feature.description}</p>
               </CardContent>
             </Card>
@@ -102,11 +113,15 @@ const Index = () => {
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">10,000+</div>
+              <div className="text-3xl font-bold text-blue-600 mb-2">
+                10,000+
+              </div>
               <div className="text-gray-600">Students Enrolled</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">5,000+</div>
+              <div className="text-3xl font-bold text-blue-600 mb-2">
+                5,000+
+              </div>
               <div className="text-gray-600">Tests Completed</div>
             </div>
             <div>
