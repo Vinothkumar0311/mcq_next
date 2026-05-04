@@ -134,15 +134,15 @@ mcq2.o-main/
 ```mermaid
 graph TB
     subgraph Client["🖥️ Browser (Port 3000)"]
-        FE["React SPA\n(Vite + TypeScript)"]
-        AUTH_CTX["AuthContext\n(JWT + Google OAuth)"]
-        ROUTER["React Router v6\n(BrowserRouter)"]
-        MONACO["Monaco Editor\n(HTML/CSS)"]
-        PREVIEW["Live Preview\n(iframe srcdoc)"]
+        FE["React SPA<br/>(Vite + TypeScript)"]
+        AUTH_CTX["AuthContext<br/>(JWT + Google OAuth)"]
+        ROUTER["React Router v6<br/>(BrowserRouter)"]
+        MONACO["Monaco Editor<br/>(HTML/CSS)"]
+        PREVIEW["Live Preview<br/>(iframe srcdoc)"]
     end
 
     subgraph Backend["⚙️ Express API Server (Port 5000)"]
-        API["Express.js\nREST API"]
+        API["Express.js<br/>REST API"]
 
         subgraph Routes["Route Handlers"]
             R_AUTH["/api/auth"]
@@ -155,30 +155,30 @@ graph TB
         end
 
         subgraph Services["Services Layer"]
-            UI_SVC["UIEvaluationService\n(Singleton)"]
-            AI_SVC["Ollama AI Service\n(gemma:2b)"]
+            UI_SVC["UIEvaluationService<br/>(Singleton)"]
+            AI_SVC["Ollama AI Service<br/>(gemma:2b)"]
         end
 
         subgraph Engines["Evaluation Engines"]
-            PUPPETEER["Puppeteer\n(Headless Chrome)"]
-            PIXELMATCH["pixelmatch\n(Pixel Comparison)"]
+            PUPPETEER["Puppeteer<br/>(Headless Chrome)"]
+            PIXELMATCH["pixelmatch<br/>(Pixel Comparison)"]
         end
     end
 
     subgraph Database["🗄️ MySQL Database"]
         DB[("test_platform DB")]
         TBL_USERS["Users"]
-        TBL_UI_Q["UIQuestions\n+ UIQuestionImages"]
+        TBL_UI_Q["UIQuestions +<br/>UIQuestionImages"]
         TBL_UI_ATT["UIAttempts"]
-        TBL_TESTS["Tests + Sections\n+ MCQs"]
-        TBL_RESULTS["StudentTestResults\n+ SectionScores"]
+        TBL_TESTS["Tests + Sections +<br/>MCQs"]
+        TBL_RESULTS["StudentTestResults +<br/>SectionScores"]
         TBL_VIOLA["StudentViolations"]
         TBL_SESSION["TestSessions"]
     end
 
     subgraph External["🌐 External Services"]
-        GOOGLE["Google OAuth\n(SSO)"]
-        OLLAMA["Ollama LLM\n(Local, Port 11434)"]
+        GOOGLE["Google OAuth<br/>(SSO)"]
+        OLLAMA["Ollama LLM<br/>(Local, Port 11434)"]
     end
 
     FE -->|"Axios HTTP"| API
@@ -208,24 +208,24 @@ graph TB
 
 ```mermaid
 graph LR
-    START([User visits /]) --> LOGIN[/login]
+    START(["User visits root"]) --> LOGIN["/login"]
     LOGIN -->|Google OAuth| GOOGLE_AUTH[(Google)]
     LOGIN -->|Email + Password| JWT_AUTH[(JWT)]
-    
-    GOOGLE_AUTH -->|Token| AUTH_CTX{AuthContext\nRole Check}
+
+    GOOGLE_AUTH -->|Token| AUTH_CTX{"AuthContext<br/>Role Check"}
     JWT_AUTH -->|Token| AUTH_CTX
 
-    AUTH_CTX -->|role = 'admin'| ADMIN_DASH[/admin/dashboard]
-    AUTH_CTX -->|role = 'student'| STUDENT_DASH[/student/dashboard]
+    AUTH_CTX -->|"role = admin"| ADMIN_DASH["/admin/dashboard"]
+    AUTH_CTX -->|"role = student"| STUDENT_DASH["/student/dashboard"]
 
     ADMIN_DASH --> ADMIN_ASSESS[Assessment Center]
     ADMIN_DASH --> ADMIN_UI[UI Question Creator]
-    ADMIN_DASH --> ADMIN_REPORTS[Reports & Analytics]
+    ADMIN_DASH --> ADMIN_REPORTS[Reports and Analytics]
     ADMIN_DASH --> ADMIN_VIOLA[Violation Monitor]
     ADMIN_DASH --> ADMIN_PASSCODE[Passcode Manager]
 
-    STUDENT_DASH --> STUDENT_ASSESS[Assessment Center\n/student/assessment]
-    STUDENT_DASH --> STUDENT_UI[UI Challenges\n/student/ui-assessment]
+    STUDENT_DASH --> STUDENT_ASSESS["/student/assessment"]
+    STUDENT_DASH --> STUDENT_UI["/student/ui-assessment"]
     STUDENT_DASH --> STUDENT_REPORTS[My Reports]
     STUDENT_DASH --> STUDENT_LEADERBOARD[Leaderboard]
 ```
@@ -316,7 +316,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant Student
-    participant FE as Frontend (StudentUIChallenge)
+    participant FE as "Frontend (StudentUIChallenge)"
     participant BE as Backend
     participant DB as MySQL
     participant Puppeteer
@@ -379,24 +379,24 @@ sequenceDiagram
 ```mermaid
 flowchart TD
     ADMIN([Admin Login]) --> DASH[Admin Dashboard]
-    
-    DASH --> CREATE_UI[Create UI Question\n/admin/ui_test]
-    CREATE_UI --> UPLOAD_IMG[Upload Reference Images\n(JPEG/PNG/WebP)]
-    UPLOAD_IMG --> SET_META[Set Title, Difficulty,\nTime Limit, Points]
+
+    DASH --> CREATE_UI["/admin/ui_test<br/>Create UI Question"]
+    CREATE_UI --> UPLOAD_IMG["Upload Reference Images<br/>JPEG / PNG / WebP"]
+    UPLOAD_IMG --> SET_META["Set Title, Difficulty,<br/>Time Limit and Points"]
     SET_META --> PUBLISH[Publish to Students]
 
-    DASH --> CREATE_MCQ[Create MCQ Test\n/admin/create-test]
-    CREATE_MCQ --> ADD_SEC[Add Sections + MCQs]
+    DASH --> CREATE_MCQ["/admin/create-test<br/>Create MCQ Test"]
+    CREATE_MCQ --> ADD_SEC[Add Sections and MCQs]
     ADD_SEC --> ASSIGN[Assign to Students]
 
-    DASH --> REPORTS[View Reports\n/admin/reports]
-    REPORTS --> RELEASE[Release Results\n(controlled visibility)]
+    DASH --> REPORTS["/admin/reports<br/>View Reports"]
+    REPORTS --> RELEASE["Release Results<br/>controlled visibility"]
 
-    DASH --> VIOLATIONS[Monitor Violations\n/admin/violations]
+    DASH --> VIOLATIONS["/admin/violations<br/>Monitor Violations"]
     VIOLATIONS --> VIEW_PROOF[View Screenshot Evidence]
 
-    DASH --> PASSCODE[Manage Passcodes\n/admin/passcode]
-    PASSCODE --> SET_CODE[Set Supervisor Passcode\nfor Test Submission]
+    DASH --> PASSCODE["/admin/passcode<br/>Manage Passcodes"]
+    PASSCODE --> SET_CODE["Set Supervisor Passcode<br/>for Test Submission"]
 ```
 
 ---
@@ -569,41 +569,43 @@ The UI challenge submission triggers a **4-stage automated pipeline**:
 
 ```mermaid
 flowchart LR
-    A["📥 Student Submits\nHTML + CSS"] --> B
+    A["📥 Student Submits<br/>HTML + CSS"] --> B
 
     subgraph Stage1["Stage 1 — Screenshot"]
-        B["Puppeteer\nlaunches headless Chrome"]
-        B --> C["Renders student\nHTML+CSS at 1200×800"]
-        C --> D["📸 Saves submission.png"]
+        B["Puppeteer<br/>launches headless Chrome"]
+        B --> C["Renders student<br/>HTML+CSS at 1200×800"]
+        D["📸 Saves submission.png"]
+        C --> D
     end
 
     D --> E
 
     subgraph Stage2["Stage 2 — Reference Normalize"]
-        E["Load teacher's\nreference image\n(any format)"]
-        E --> F["Puppeteer renders\nas base64 data-URL"]
-        F --> G["📸 Saves ref_normalised.png\n(same 1200×800 viewport)"]
+        E["Load teacher's<br/>reference image<br/>(any format)"]
+        E --> F["Puppeteer renders<br/>as base64 data-URL"]
+        G["📸 Saves ref_normalised.png<br/>(same 1200×800 viewport)"]
+        F --> G
     end
 
     G --> H
 
     subgraph Stage3["Stage 3 — Pixel Compare"]
-        H["pixelmatch compares\n2 PNG files\n(threshold: 0.1)"]
-        H --> I["Counts differing\npixels"]
-        I --> J["💯 matchPercent\npixelDifference"]
-        I --> K["Saves diff.png\n(red highlight)"]
+        H["pixelmatch compares<br/>2 PNG files<br/>(threshold: 0.1)"]
+        H --> I["Counts differing<br/>pixels"]
+        I --> J["💯 matchPercent<br/>pixelDifference"]
+        I --> K["Saves diff.png<br/>(red highlight)"]
     end
 
     J --> L
 
     subgraph Stage4["Stage 4 — AI Critique"]
-        L["POST to Ollama\n(gemma:2b model)"]
-        L --> M["Structured prompt:\nrate layout, spacing,\ncolor, typography"]
-        M --> N["JSON response:\nlayout_score,\nspacing_score,\ncolor_score,\ntypography_score,\nfeedback_text,\npriority_fixes[]"]
+        L["POST to Ollama<br/>(gemma:2b model)"]
+        L --> M["Structured prompt:<br/>rate layout, spacing,<br/>color, typography"]
+        M --> N["JSON response:<br/>layout_score,<br/>spacing_score,<br/>color_score,<br/>typography_score,<br/>feedback_text,<br/>priority_fixes[]"]
     end
 
-    N --> O["💾 Save to UIAttempts\nin MySQL"]
-    O --> P["📊 Send to Student\nResults Dashboard"]
+    N --> O["💾 Save to UIAttempts<br/>in MySQL"]
+    O --> P["📊 Send to Student<br/>Results Dashboard"]
 ```
 
 ### Scoring Formula
@@ -625,27 +627,27 @@ The platform implements multi-layer proctoring for both MCQ and UI challenges:
 
 ```mermaid
 flowchart TD
-    START[Student starts test/challenge] --> FS[Request Fullscreen\ndocument.requestFullscreen]
-    FS --> MODAL{Overlay dismissed\nby student click?}
-    MODAL -->|No| WAIT[Wait — workspace blocked]
+    START[Student starts test] --> FS["Request Fullscreen<br/>document.requestFullscreen"]
+    FS --> MODAL{"Overlay dismissed<br/>by student click?"}
+    MODAL -->|No| WAIT[Wait - workspace blocked]
     MODAL -->|Yes| ACTIVE[Challenge Active]
 
     ACTIVE --> MONITOR{Event Listeners}
-    MONITOR --> FS_CHANGE[fullscreenchange\nevent]
-    MONITOR --> VIS_CHANGE[visibilitychange\nevent]
-    MONITOR --> UNLOAD[beforeunload\nevent]
+    MONITOR --> FS_CHANGE[fullscreenchange event]
+    MONITOR --> VIS_CHANGE[visibilitychange event]
+    MONITOR --> UNLOAD[beforeunload event]
 
-    FS_CHANGE -->|Exited fullscreen| PAUSE["Show 'Challenge Paused'\nOverlay"]
-    PAUSE --> RESUME[Student clicks\nResume Fullscreen]
+    FS_CHANGE -->|Exited fullscreen| PAUSE["Show Challenge Paused Overlay"]
+    PAUSE --> RESUME[Student clicks Resume Fullscreen]
     RESUME --> ACTIVE
 
-    VIS_CHANGE -->|Tab switched| WARN[Log Warning\nOptional: auto-submit]
-    UNLOAD -->|Page close| SAVE[Auto-save answers\nto localStorage]
+    VIS_CHANGE -->|Tab switched| WARN["Log Warning - Optional auto-submit"]
+    UNLOAD -->|Page close| SAVE[Auto-save answers to localStorage]
 
     ACTIVE --> SUBMIT[Submit]
-    SUBMIT --> EXIT_FS[Exit Fullscreen\nautomatically]
+    SUBMIT --> EXIT_FS[Exit Fullscreen automatically]
     EXIT_FS --> RESULTS[Show Results]
-    RESULTS --> REDIRECT[30s countdown\n→ Redirect to assessment]
+    RESULTS --> REDIRECT["30s countdown - Redirect to assessment"]
 ```
 
 **Key Proctoring Features:**
