@@ -132,8 +132,8 @@ mcq2.o-main/
 ## 4. Architecture Diagram
 
 ```mermaid
-graph TB
-    subgraph Client["🖥️ Browser (Port 3000)"]
+flowchart TB
+    subgraph Client ["🖥️ Browser (Port 3000)"]
         FE["React SPA<br/>(Vite + TypeScript)"]
         AUTH_CTX["AuthContext<br/>(JWT + Google OAuth)"]
         ROUTER["React Router v6<br/>(BrowserRouter)"]
@@ -141,10 +141,10 @@ graph TB
         PREVIEW["Live Preview<br/>(iframe srcdoc)"]
     end
 
-    subgraph Backend["⚙️ Express API Server (Port 5000)"]
+    subgraph Backend ["⚙️ Express API Server (Port 5000)"]
         API["Express.js<br/>REST API"]
 
-        subgraph Routes["Route Handlers"]
+        subgraph Routes ["Route Handlers"]
             R_AUTH["/api/auth"]
             R_TEST["/api/test"]
             R_CODING["/api/coding"]
@@ -154,18 +154,18 @@ graph TB
             R_VIOLA["/api/violations"]
         end
 
-        subgraph Services["Services Layer"]
+        subgraph Services ["Services Layer"]
             UI_SVC["UIEvaluationService<br/>(Singleton)"]
             AI_SVC["Ollama AI Service<br/>(gemma:2b)"]
         end
 
-        subgraph Engines["Evaluation Engines"]
+        subgraph Engines ["Evaluation Engines"]
             PUPPETEER["Puppeteer<br/>(Headless Chrome)"]
             PIXELMATCH["pixelmatch<br/>(Pixel Comparison)"]
         end
     end
 
-    subgraph Database["🗄️ MySQL Database"]
+    subgraph Database ["🗄️ MySQL Database"]
         DB[("test_platform DB")]
         TBL_USERS["Users"]
         TBL_UI_Q["UIQuestions +<br/>UIQuestionImages"]
@@ -176,7 +176,7 @@ graph TB
         TBL_SESSION["TestSessions"]
     end
 
-    subgraph External["🌐 External Services"]
+    subgraph External ["🌐 External Services"]
         GOOGLE["Google OAuth<br/>(SSO)"]
         OLLAMA["Ollama LLM<br/>(Local, Port 11434)"]
     end
@@ -193,13 +193,13 @@ graph TB
     AI_SVC --> OLLAMA
 
     Routes --> DB
-    DB --- TBL_USERS
-    DB --- TBL_UI_Q
-    DB --- TBL_UI_ATT
-    DB --- TBL_TESTS
-    DB --- TBL_RESULTS
-    DB --- TBL_VIOLA
-    DB --- TBL_SESSION
+    DB --> TBL_USERS
+    DB --> TBL_UI_Q
+    DB --> TBL_UI_ATT
+    DB --> TBL_TESTS
+    DB --> TBL_RESULTS
+    DB --> TBL_VIOLA
+    DB --> TBL_SESSION
 ```
 
 ---
@@ -207,27 +207,27 @@ graph TB
 ## 5. User Roles & Access Flow
 
 ```mermaid
-graph LR
+flowchart LR
     START(["User visits root"]) --> LOGIN["/login"]
-    LOGIN -->|Google OAuth| GOOGLE_AUTH[(Google)]
-    LOGIN -->|Email + Password| JWT_AUTH[(JWT)]
+    LOGIN -->|"Google OAuth"| GOOGLE_AUTH[(Google)]
+    LOGIN -->|"Email + Password"| JWT_AUTH[(JWT)]
 
-    GOOGLE_AUTH -->|Token| AUTH_CTX{"AuthContext<br/>Role Check"}
-    JWT_AUTH -->|Token| AUTH_CTX
+    GOOGLE_AUTH -->|"Token"| AUTH_CTX{"AuthContext<br/>Role Check"}
+    JWT_AUTH -->|"Token"| AUTH_CTX
 
     AUTH_CTX -->|"role = admin"| ADMIN_DASH["/admin/dashboard"]
     AUTH_CTX -->|"role = student"| STUDENT_DASH["/student/dashboard"]
 
-    ADMIN_DASH --> ADMIN_ASSESS[Assessment Center]
-    ADMIN_DASH --> ADMIN_UI[UI Question Creator]
-    ADMIN_DASH --> ADMIN_REPORTS[Reports and Analytics]
-    ADMIN_DASH --> ADMIN_VIOLA[Violation Monitor]
-    ADMIN_DASH --> ADMIN_PASSCODE[Passcode Manager]
+    ADMIN_DASH --> ADMIN_ASSESS["Assessment Center"]
+    ADMIN_DASH --> ADMIN_UI["UI Question Creator"]
+    ADMIN_DASH --> ADMIN_REPORTS["Reports and Analytics"]
+    ADMIN_DASH --> ADMIN_VIOLA["Violation Monitor"]
+    ADMIN_DASH --> ADMIN_PASSCODE["Passcode Manager"]
 
     STUDENT_DASH --> STUDENT_ASSESS["/student/assessment"]
     STUDENT_DASH --> STUDENT_UI["/student/ui-assessment"]
-    STUDENT_DASH --> STUDENT_REPORTS[My Reports]
-    STUDENT_DASH --> STUDENT_LEADERBOARD[Leaderboard]
+    STUDENT_DASH --> STUDENT_REPORTS["My Reports"]
+    STUDENT_DASH --> STUDENT_LEADERBOARD["Leaderboard"]
 ```
 
 ---
@@ -571,7 +571,7 @@ The UI challenge submission triggers a **4-stage automated pipeline**:
 flowchart LR
     A["📥 Student Submits<br/>HTML + CSS"] --> B
 
-    subgraph Stage1["Stage 1 — Screenshot"]
+    subgraph Stage1 ["Stage 1 — Screenshot"]
         B["Puppeteer<br/>launches headless Chrome"]
         B --> C["Renders student<br/>HTML+CSS at 1200×800"]
         D["📸 Saves submission.png"]
@@ -580,7 +580,7 @@ flowchart LR
 
     D --> E
 
-    subgraph Stage2["Stage 2 — Reference Normalize"]
+    subgraph Stage2 ["Stage 2 — Reference Normalize"]
         E["Load teacher's<br/>reference image<br/>(any format)"]
         E --> F["Puppeteer renders<br/>as base64 data-URL"]
         G["📸 Saves ref_normalised.png<br/>(same 1200×800 viewport)"]
@@ -589,7 +589,7 @@ flowchart LR
 
     G --> H
 
-    subgraph Stage3["Stage 3 — Pixel Compare"]
+    subgraph Stage3 ["Stage 3 — Pixel Compare"]
         H["pixelmatch compares<br/>2 PNG files<br/>(threshold: 0.1)"]
         H --> I["Counts differing<br/>pixels"]
         I --> J["💯 matchPercent<br/>pixelDifference"]
@@ -598,10 +598,10 @@ flowchart LR
 
     J --> L
 
-    subgraph Stage4["Stage 4 — AI Critique"]
+    subgraph Stage4 ["Stage 4 — AI Critique"]
         L["POST to Ollama<br/>(gemma:2b model)"]
         L --> M["Structured prompt:<br/>rate layout, spacing,<br/>color, typography"]
-        M --> N["JSON response:<br/>layout_score,<br/>spacing_score,<br/>color_score,<br/>typography_score,<br/>feedback_text,<br/>priority_fixes[]"]
+        M --> N["JSON response:<br/>layout_score,<br/>spacing_score,<br/>color_score,<br/>typography_score,<br/>feedback_text,<br/>priority_fixes"]
     end
 
     N --> O["💾 Save to UIAttempts<br/>in MySQL"]
